@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace School_Management_System
 {
+    [DesignerCategory("Form")]
     public partial class StudentForm : Form
     {
-        // Connection String
         private string connString = @"Data Source=.\SQLEXPRESS; Initial Catalog=schoolmanagement; Integrated Security=True; Encrypt=False";
 
         public StudentForm()
@@ -24,12 +19,16 @@ namespace School_Management_System
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            {
+                return;
+            }
+
             DisplayData();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // 1. Check karein ke fields khali to nahi
             if (string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtFather.Text))
             {
                 MessageBox.Show("Please fill all fields!");
@@ -41,7 +40,6 @@ namespace School_Management_System
                 try
                 {
                     conn.Open();
-                    // 2. Query jo data SQL table mein insert karegi
                     string query = "INSERT INTO Students (FullName, FatherName, Contact) VALUES (@name, @father, @contact)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
@@ -49,12 +47,10 @@ namespace School_Management_System
                     cmd.Parameters.AddWithValue("@father", txtFather.Text);
                     cmd.Parameters.AddWithValue("@contact", txtContact.Text);
 
-                    // 3. Query run karna
                     cmd.ExecuteNonQuery();
 
                     MessageBox.Show("Student Data Saved Successfully!");
 
-                    // 4. Fields ko khali kar dena
                     txtName.Clear();
                     txtFather.Clear();
                     txtContact.Clear();
@@ -68,7 +64,6 @@ namespace School_Management_System
             }
         }
 
-        // Ye function data ko grid mein dikhaye ga
         public void DisplayData()
         {
             using (SqlConnection conn = new SqlConnection(connString))
@@ -76,14 +71,13 @@ namespace School_Management_System
                 try
                 {
                     conn.Open();
-                    // Sab students ka data mangwane ki query
                     string query = "SELECT * FROM Students";
 
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
 
-                    da.Fill(dt); // Data table mein bhar diya
-                    dgvStudents.DataSource = dt; // Grid ko table dikha diya
+                    da.Fill(dt);
+                    dgvStudents.DataSource = dt;
                 }
                 catch (Exception ex)
                 {
@@ -92,9 +86,43 @@ namespace School_Management_System
             }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-            this.Close(); // Form band karne ke liye
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete", MessageBoxButtons.YesNo);
+
+            if (dr == DialogResult.Yes)
+            {
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    try
+                    {
+                        conn.Open();
+                        string query = "DELETE FROM Students WHERE FullName = @name";
+
+                        SqlCommand cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@name", txtName.Text);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Student Deleted Successfully!");
+                            DisplayData();
+                            txtName.Clear();
+                            txtFather.Clear();
+                            txtContact.Clear();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Student not found!");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
         }
 
         private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -106,11 +134,63 @@ namespace School_Management_System
         {
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Students WHERE FullName LIKE '" + txtSearch.Text + "%'", conn);
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Students WHERE FullName LIKE @name + '%'", conn);
+                da.SelectCommand.Parameters.AddWithValue("@name", txtSearch.Text);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dgvStudents.DataSource = dt;
             }
         }
+
+        private void dgvStudents_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvStudents.Rows[e.RowIndex];
+                txtName.Text = row.Cells["FullName"].Value.ToString();
+                txtFather.Text = row.Cells["FatherName"].Value.ToString();
+                txtContact.Text = row.Cells["Contact"].Value.ToString();
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text))
+            {
+                MessageBox.Show("Please select a student from the list first!");
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "UPDATE Students SET FatherName=@father, Contact=@contact WHERE FullName=@name";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@name", txtName.Text);
+                    cmd.Parameters.AddWithValue("@father", txtFather.Text);
+                    cmd.Parameters.AddWithValue("@contact", txtContact.Text);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Student Updated Successfully!");
+                        DisplayData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Student not found or no changes made.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Update Error: " + ex.Message);
+                }
+            }
+        }
     }
 }
+
