@@ -22,6 +22,7 @@ namespace School_Management_System
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnclose = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtUser
@@ -34,7 +35,7 @@ namespace School_Management_System
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(180, 138);
+            this.txtPass.Location = new System.Drawing.Point(180, 150);
             this.txtPass.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
@@ -66,18 +67,29 @@ namespace School_Management_System
             // lblName
             // 
             this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Font = new System.Drawing.Font("Microsoft YaHei", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.Location = new System.Drawing.Point(191, 41);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(86, 31);
+            this.lblName.Size = new System.Drawing.Size(73, 27);
             this.lblName.TabIndex = 4;
             this.lblName.Text = "Name";
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Font = new System.Drawing.Font("Microsoft YaHei", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword.Location = new System.Drawing.Point(191, 108);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(108, 27);
+            this.lblPassword.TabIndex = 5;
+            this.lblPassword.Text = "Password";
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 385);
+            this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnclose);
             this.Controls.Add(this.btnLogin);
@@ -98,6 +110,7 @@ namespace School_Management_System
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnclose;
         private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label lblPassword;
     }
 }
 

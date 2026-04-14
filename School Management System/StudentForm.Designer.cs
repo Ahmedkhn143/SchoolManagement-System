@@ -37,6 +37,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnclose = new System.Windows.Forms.Button();
             this.dgvStudents = new System.Windows.Forms.DataGridView();
+            this.lblSearch = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,6 +113,7 @@
             this.btnclose.TabIndex = 7;
             this.btnclose.Text = "Close";
             this.btnclose.UseVisualStyleBackColor = true;
+            this.btnclose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // dgvStudents
             // 
@@ -121,12 +124,33 @@
             this.dgvStudents.RowTemplate.Height = 28;
             this.dgvStudents.Size = new System.Drawing.Size(335, 185);
             this.dgvStudents.TabIndex = 8;
+            this.dgvStudents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStudents_CellContentClick);
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.lblSearch.Location = new System.Drawing.Point(323, 29);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(127, 20);
+            this.lblSearch.TabIndex = 9;
+            this.lblSearch.Text = "Search by Name";
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(468, 26);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(195, 26);
+            this.txtSearch.TabIndex = 10;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // StudentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtSearch);
+            this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.dgvStudents);
             this.Controls.Add(this.btnclose);
             this.Controls.Add(this.btnSave);
@@ -138,6 +162,7 @@
             this.Controls.Add(this.txtName);
             this.Name = "StudentForm";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -155,5 +180,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnclose;
         private System.Windows.Forms.DataGridView dgvStudents;
+        private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }

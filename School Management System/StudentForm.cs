@@ -15,11 +15,16 @@ namespace School_Management_System
     public partial class StudentForm : Form
     {
         // Connection String
-        string connString = @"Data Source=.\SQLEXPRESS; Initial Catalog=schoolmanagement; Integrated Security=True; Encrypt=False";
+        private string connString = @"Data Source=.\SQLEXPRESS; Initial Catalog=schoolmanagement; Integrated Security=True; Encrypt=False";
 
         public StudentForm()
         {
             InitializeComponent();
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            DisplayData();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -53,6 +58,8 @@ namespace School_Management_System
                     txtName.Clear();
                     txtFather.Clear();
                     txtContact.Clear();
+
+                    DisplayData();
                 }
                 catch (Exception ex)
                 {
@@ -61,9 +68,49 @@ namespace School_Management_System
             }
         }
 
+        // Ye function data ko grid mein dikhaye ga
+        public void DisplayData()
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+                    // Sab students ka data mangwane ki query
+                    string query = "SELECT * FROM Students";
+
+                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+
+                    da.Fill(dt); // Data table mein bhar diya
+                    dgvStudents.DataSource = dt; // Grid ko table dikha diya
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error displaying data: " + ex.Message);
+                }
+            }
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close(); // Form band karne ke liye
+        }
+
+        private void dgvStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Students WHERE FullName LIKE '" + txtSearch.Text + "%'", conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dgvStudents.DataSource = dt;
+            }
         }
     }
 }
