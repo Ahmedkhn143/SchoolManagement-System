@@ -75,5 +75,10 @@ namespace School_Management_System
         {
             Application.Exit();
         }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

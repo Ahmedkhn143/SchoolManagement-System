@@ -88,7 +88,7 @@ namespace School_Management_System
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.lblTitle.Location = new System.Drawing.Point(20, 20);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(430, 45);
+            this.lblTitle.Size = new System.Drawing.Size(521, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "SCHOOL MANAGEMENT SYSTEM";
             // 
@@ -100,6 +100,7 @@ namespace School_Management_System
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(770, 530);
             this.mainPanel.TabIndex = 2;
+            this.mainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
             // 
             // Dashboard
             // 
