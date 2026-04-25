@@ -35,6 +35,35 @@ namespace School_Management_System
             ShowHomeDashboard();
         }
 
+        private void btnTeachers_Click(object sender, EventArgs e)
+        {
+            // Placeholder: open teacher management UI (not implemented yet)
+            MessageBox.Show("Teachers module coming soon.");
+        }
+
+        private void btnAttendance_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Attendance module coming soon.");
+        }
+
+        private void btnFees_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Fees module coming soon.");
+        }
+
+        private void btnPasswordTool_Click(object sender, EventArgs e)
+        {
+            // Only allow Admin to open
+            if (!currentRole.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show("Only Admin can manage user passwords.");
+                return;
+            }
+
+            var f = new PasswordToolForm();
+            f.ShowDialog(this);
+        }
+
         private void ShowHomeDashboard()
         {
             mainPanel.Controls.Clear();

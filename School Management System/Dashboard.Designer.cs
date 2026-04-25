@@ -32,6 +32,10 @@ namespace School_Management_System
             // 
             this.sidePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.sidePanel.Controls.Add(this.btnStudents);
+            this.sidePanel.Controls.Add(this.btnTeachers);
+            this.sidePanel.Controls.Add(this.btnAttendance);
+            this.sidePanel.Controls.Add(this.btnFees);
+            this.sidePanel.Controls.Add(this.btnPasswordTool);
             this.sidePanel.Controls.Add(this.btnLogout);
             this.sidePanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.sidePanel.Location = new System.Drawing.Point(0, 0);
@@ -55,6 +59,78 @@ namespace School_Management_System
             this.btnStudents.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStudents.UseVisualStyleBackColor = true;
             this.btnStudents.Click += new System.EventHandler(this.btnStudents_Click);
+            // 
+            // btnTeachers
+            // 
+            this.btnTeachers = new System.Windows.Forms.Button();
+            this.btnTeachers.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnTeachers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTeachers.FlatAppearance.BorderSize = 0;
+            this.btnTeachers.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTeachers.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnTeachers.ForeColor = System.Drawing.Color.White;
+            this.btnTeachers.Location = new System.Drawing.Point(0, 60);
+            this.btnTeachers.Name = "btnTeachers";
+            this.btnTeachers.Size = new System.Drawing.Size(230, 60);
+            this.btnTeachers.TabIndex = 1;
+            this.btnTeachers.Text = "  Manage Teachers";
+            this.btnTeachers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTeachers.UseVisualStyleBackColor = true;
+            this.btnTeachers.Click += new System.EventHandler(this.btnTeachers_Click);
+            // 
+            // btnAttendance
+            // 
+            this.btnAttendance = new System.Windows.Forms.Button();
+            this.btnAttendance.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAttendance.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnAttendance.FlatAppearance.BorderSize = 0;
+            this.btnAttendance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAttendance.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnAttendance.ForeColor = System.Drawing.Color.White;
+            this.btnAttendance.Location = new System.Drawing.Point(0, 120);
+            this.btnAttendance.Name = "btnAttendance";
+            this.btnAttendance.Size = new System.Drawing.Size(230, 60);
+            this.btnAttendance.TabIndex = 2;
+            this.btnAttendance.Text = "  Attendance";
+            this.btnAttendance.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAttendance.UseVisualStyleBackColor = true;
+            this.btnAttendance.Click += new System.EventHandler(this.btnAttendance_Click);
+            // 
+            // btnFees
+            // 
+            this.btnFees = new System.Windows.Forms.Button();
+            this.btnFees.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFees.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnFees.FlatAppearance.BorderSize = 0;
+            this.btnFees.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFees.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnFees.ForeColor = System.Drawing.Color.White;
+            this.btnFees.Location = new System.Drawing.Point(0, 180);
+            this.btnFees.Name = "btnFees";
+            this.btnFees.Size = new System.Drawing.Size(230, 60);
+            this.btnFees.TabIndex = 3;
+            this.btnFees.Text = "  Fees";
+            this.btnFees.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFees.UseVisualStyleBackColor = true;
+            this.btnFees.Click += new System.EventHandler(this.btnFees_Click);
+            // 
+            // btnPasswordTool
+            // 
+            this.btnPasswordTool = new System.Windows.Forms.Button();
+            this.btnPasswordTool.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPasswordTool.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnPasswordTool.FlatAppearance.BorderSize = 0;
+            this.btnPasswordTool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPasswordTool.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnPasswordTool.ForeColor = System.Drawing.Color.White;
+            this.btnPasswordTool.Location = new System.Drawing.Point(0, 240);
+            this.btnPasswordTool.Name = "btnPasswordTool";
+            this.btnPasswordTool.Size = new System.Drawing.Size(230, 60);
+            this.btnPasswordTool.TabIndex = 4;
+            this.btnPasswordTool.Text = "  Password Tool";
+            this.btnPasswordTool.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPasswordTool.UseVisualStyleBackColor = true;
+            this.btnPasswordTool.Click += new System.EventHandler(this.btnPasswordTool_Click);
             // 
             // btnLogout
             // 
