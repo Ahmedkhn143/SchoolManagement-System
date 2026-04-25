@@ -32,12 +32,43 @@ namespace School_Management_System
                 {
                     conn.Open();
 
-                    string query = "SELECT TOP 1 Role FROM Users WHERE Username=@u AND Password=@p";
+                    // Fetch stored hashed password and role for username
+                    string query = "SELECT TOP 1 Password, Role FROM Users WHERE Username=@u";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@u", username);
-                    cmd.Parameters.AddWithValue("@p", password);
 
-                    object roleObj = cmd.ExecuteScalar();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            MessageBox.Show("Invalid username or password.");
+                            return;
+                        }
+
+                        string storedHash = reader.IsDBNull(0) ? null : reader.GetString(0);
+                        string role = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+
+                        // verify password using PasswordHelper
+                        if (string.IsNullOrEmpty(storedHash) || !School_Management_System.Security.PasswordHelper.Verify(password, storedHash))
+                        {
+                            MessageBox.Show("Invalid username or password.");
+                            return;
+                        }
+
+                        // role available
+                        if (!role.Equals("Admin", StringComparison.OrdinalIgnoreCase) &&
+                            !role.Equals("Principal", StringComparison.OrdinalIgnoreCase) &&
+                            !role.Equals("Principle", StringComparison.OrdinalIgnoreCase))
+                        {
+                            MessageBox.Show("Unauthorized role. Contact admin.");
+                            return;
+                        }
+
+                        Dashboard dash = new Dashboard(username, role);
+                        dash.Show();
+                        Hide();
+                        return;
+                    }
                     if (roleObj == null || roleObj == DBNull.Value)
                     {
                         MessageBox.Show("Invalid username or password.");
