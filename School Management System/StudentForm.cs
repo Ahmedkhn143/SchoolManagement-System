@@ -11,6 +11,7 @@ namespace School_Management_System
     public partial class StudentForm : Form
     {
         private string connString = @"Data Source=.\SQLEXPRESS; Initial Catalog=schoolmanagement; Integrated Security=True; Encrypt=False";
+        private int? _selectedStudentId = null;
 
         public StudentForm()
         {
@@ -35,54 +36,43 @@ namespace School_Management_System
                 return;
             }
 
-            using (SqlConnection conn = new SqlConnection(connString))
+            try
             {
-                try
+                var repo = new School_Management_System.Data.StudentRepository();
+                var s = new School_Management_System.Models.Student
                 {
-                    conn.Open();
-                    string query = "INSERT INTO Students (FullName, FatherName, Contact) VALUES (@name, @father, @contact)";
+                    FirstName = txtName.Text,
+                    LastName = "",
+                    FatherName = txtFather.Text,
+                    ClassName = "",
+                    Contact = txtContact.Text
+                };
 
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@name", txtName.Text);
-                    cmd.Parameters.AddWithValue("@father", txtFather.Text);
-                    cmd.Parameters.AddWithValue("@contact", txtContact.Text);
+                repo.Insert(s);
+                MessageBox.Show("Student Data Saved Successfully!");
 
-                    cmd.ExecuteNonQuery();
+                txtName.Clear();
+                txtFather.Clear();
+                txtContact.Clear();
 
-                    MessageBox.Show("Student Data Saved Successfully!");
-
-                    txtName.Clear();
-                    txtFather.Clear();
-                    txtContact.Clear();
-
-                    DisplayData();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
+                DisplayData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving student: " + ex.Message);
             }
         }
 
         public void DisplayData()
         {
-            using (SqlConnection conn = new SqlConnection(connString))
+            try
             {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT * FROM Students";
-
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-
-                    da.Fill(dt);
-                    dgvStudents.DataSource = dt;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error displaying data: " + ex.Message);
-                }
+                var repo = new School_Management_System.Data.StudentRepository();
+                dgvStudents.DataSource = repo.GetAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error displaying data: " + ex.Message);
             }
         }
 
@@ -92,35 +82,25 @@ namespace School_Management_System
 
             if (dr == DialogResult.Yes)
             {
-                using (SqlConnection conn = new SqlConnection(connString))
+                try
                 {
-                    try
+                    var repo = new School_Management_System.Data.StudentRepository();
+                    if (_selectedStudentId.HasValue)
                     {
-                        conn.Open();
-                        string query = "DELETE FROM Students WHERE FullName = @name";
-
-                        SqlCommand cmd = new SqlCommand(query, conn);
-                        cmd.Parameters.AddWithValue("@name", txtName.Text);
-
-                        int rowsAffected = cmd.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Student Deleted Successfully!");
-                            DisplayData();
-                            txtName.Clear();
-                            txtFather.Clear();
-                            txtContact.Clear();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Student not found!");
-                        }
+                        repo.Delete(_selectedStudentId.Value);
+                        MessageBox.Show("Student Deleted Successfully!");
+                        DisplayData();
+                        txtName.Clear(); txtFather.Clear(); txtContact.Clear();
+                        _selectedStudentId = null;
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show("Error: " + ex.Message);
+                        MessageBox.Show("Please select a student from the list to delete.");
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error deleting student: " + ex.Message);
                 }
             }
         }
@@ -132,13 +112,14 @@ namespace School_Management_System
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            using (SqlConnection conn = new SqlConnection(connString))
+            try
             {
-                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM Students WHERE FullName LIKE @name + '%'", conn);
-                da.SelectCommand.Parameters.AddWithValue("@name", txtSearch.Text);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                dgvStudents.DataSource = dt;
+                var repo = new School_Management_System.Data.StudentRepository();
+                dgvStudents.DataSource = repo.SearchByName(txtSearch.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Search error: " + ex.Message);
             }
         }
 
@@ -147,9 +128,15 @@ namespace School_Management_System
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvStudents.Rows[e.RowIndex];
-                txtName.Text = row.Cells["FullName"].Value.ToString();
-                txtFather.Text = row.Cells["FatherName"].Value.ToString();
-                txtContact.Text = row.Cells["Contact"].Value.ToString();
+                // set selected student id if available
+                if (row.Cells["StudentId"] != null && row.Cells["StudentId"].Value != null)
+                {
+                    _selectedStudentId = Convert.ToInt32(row.Cells["StudentId"].Value);
+                }
+
+                txtName.Text = row.Cells["FullName"].Value?.ToString() ?? string.Empty;
+                txtFather.Text = row.Cells["FatherName"].Value?.ToString() ?? string.Empty;
+                txtContact.Text = row.Cells["Contact"].Value?.ToString() ?? string.Empty;
             }
         }
 
@@ -160,35 +147,38 @@ namespace School_Management_System
                 MessageBox.Show("Please select a student from the list first!");
                 return;
             }
-
-            using (SqlConnection conn = new SqlConnection(connString))
+            try
             {
-                try
+                if (!_selectedStudentId.HasValue)
                 {
-                    conn.Open();
-                    string query = "UPDATE Students SET FatherName=@father, Contact=@contact WHERE FullName=@name";
-
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@name", txtName.Text);
-                    cmd.Parameters.AddWithValue("@father", txtFather.Text);
-                    cmd.Parameters.AddWithValue("@contact", txtContact.Text);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Student Updated Successfully!");
-                        DisplayData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Student not found or no changes made.");
-                    }
+                    MessageBox.Show("Please select a student row to update.");
+                    return;
                 }
-                catch (Exception ex)
+
+                var repo = new School_Management_System.Data.StudentRepository();
+                var s = new School_Management_System.Models.Student
                 {
-                    MessageBox.Show("Update Error: " + ex.Message);
+                    Id = _selectedStudentId.Value,
+                    FirstName = txtName.Text,
+                    LastName = "",
+                    FatherName = txtFather.Text,
+                    Contact = txtContact.Text
+                };
+
+                int rows = repo.Update(s);
+                if (rows > 0)
+                {
+                    MessageBox.Show("Student Updated Successfully!");
+                    DisplayData();
                 }
+                else
+                {
+                    MessageBox.Show("Student not found or no changes made.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Update Error: " + ex.Message);
             }
         }
 

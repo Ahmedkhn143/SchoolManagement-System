@@ -46,5 +46,12 @@ namespace School_Management_System.Data
             var p = DatabaseHelper.CreateParam("@id", studentId);
             return _db.ExecuteNonQuery(sql, p);
         }
+
+        public DataTable SearchByName(string nameStartsWith)
+        {
+            string sql = "SELECT Id AS StudentId, FullName, FatherName, Contact FROM Students WHERE FullName LIKE @name";
+            var p = DatabaseHelper.CreateParam("@name", (nameStartsWith ?? string.Empty) + "%");
+            return _db.ExecuteDataTable(sql, p);
+        }
     }
 }
