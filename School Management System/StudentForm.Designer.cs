@@ -40,7 +40,6 @@
             this.lblSearch = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.lblHeader = new System.Windows.Forms.Label();
             this.grpStudent = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
             this.grpStudent.SuspendLayout();
@@ -160,16 +159,6 @@
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
-            // lblHeader
-            // 
-            this.lblHeader.AutoSize = true;
-            this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblHeader.Location = new System.Drawing.Point(20, 12);
-            this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(265, 38);
-            this.lblHeader.TabIndex = 12;
-            this.lblHeader.Text = "Student Management";
-            // 
             // grpStudent
             // 
             this.grpStudent.Controls.Add(this.lblname);
@@ -187,6 +176,7 @@
             this.grpStudent.TabIndex = 13;
             this.grpStudent.TabStop = false;
             this.grpStudent.Text = "Student Details";
+            this.grpStudent.Enter += new System.EventHandler(this.grpStudent_Enter);
             // 
             // StudentForm
             // 
@@ -197,7 +187,6 @@
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.dgvStudents);
-            this.Controls.Add(this.lblHeader);
             this.Name = "StudentForm";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
@@ -223,7 +212,6 @@
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.GroupBox grpStudent;
     }
 }

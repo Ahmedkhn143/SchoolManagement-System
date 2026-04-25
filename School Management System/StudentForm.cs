@@ -191,6 +191,11 @@ namespace School_Management_System
                 }
             }
         }
+
+        private void grpStudent_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

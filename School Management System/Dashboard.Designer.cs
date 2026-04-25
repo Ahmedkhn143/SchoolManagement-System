@@ -21,6 +21,7 @@ namespace School_Management_System
             this.btnStudents = new System.Windows.Forms.Button();
             this.btnLogout = new System.Windows.Forms.Button();
             this.headerPanel = new System.Windows.Forms.Panel();
+            this.lblUserInfo = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.sidePanel.SuspendLayout();
@@ -35,7 +36,7 @@ namespace School_Management_System
             this.sidePanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.sidePanel.Location = new System.Drawing.Point(0, 0);
             this.sidePanel.Name = "sidePanel";
-            this.sidePanel.Size = new System.Drawing.Size(230, 600);
+            this.sidePanel.Size = new System.Drawing.Size(224, 600);
             this.sidePanel.TabIndex = 0;
             // 
             // btnStudents
@@ -48,7 +49,7 @@ namespace School_Management_System
             this.btnStudents.ForeColor = System.Drawing.Color.White;
             this.btnStudents.Location = new System.Drawing.Point(0, 0);
             this.btnStudents.Name = "btnStudents";
-            this.btnStudents.Size = new System.Drawing.Size(230, 60);
+            this.btnStudents.Size = new System.Drawing.Size(224, 70);
             this.btnStudents.TabIndex = 0;
             this.btnStudents.Text = "  Manage Students";
             this.btnStudents.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -64,7 +65,7 @@ namespace School_Management_System
             this.btnLogout.ForeColor = System.Drawing.Color.IndianRed;
             this.btnLogout.Location = new System.Drawing.Point(0, 540);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(230, 60);
+            this.btnLogout.Size = new System.Drawing.Size(224, 60);
             this.btnLogout.TabIndex = 1;
             this.btnLogout.Text = "  Logout";
             this.btnLogout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -74,12 +75,25 @@ namespace School_Management_System
             // headerPanel
             // 
             this.headerPanel.BackColor = System.Drawing.Color.White;
+            this.headerPanel.Controls.Add(this.lblUserInfo);
             this.headerPanel.Controls.Add(this.lblTitle);
             this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerPanel.Location = new System.Drawing.Point(230, 0);
+            this.headerPanel.Location = new System.Drawing.Point(224, 0);
             this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Size = new System.Drawing.Size(770, 70);
+            this.headerPanel.Size = new System.Drawing.Size(776, 70);
             this.headerPanel.TabIndex = 1;
+            // 
+            // lblUserInfo
+            // 
+            this.lblUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUserInfo.AutoSize = true;
+            this.lblUserInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblUserInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.lblUserInfo.Location = new System.Drawing.Point(661, 35);
+            this.lblUserInfo.Name = "lblUserInfo";
+            this.lblUserInfo.Size = new System.Drawing.Size(64, 25);
+            this.lblUserInfo.TabIndex = 1;
+            this.lblUserInfo.Text = "User...";
             // 
             // lblTitle
             // 
@@ -96,9 +110,9 @@ namespace School_Management_System
             // 
             this.mainPanel.BackColor = System.Drawing.Color.White;
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(230, 70);
+            this.mainPanel.Location = new System.Drawing.Point(224, 70);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(770, 530);
+            this.mainPanel.Size = new System.Drawing.Size(776, 530);
             this.mainPanel.TabIndex = 2;
             this.mainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mainPanel_Paint);
             // 
@@ -130,5 +144,6 @@ namespace School_Management_System
         private System.Windows.Forms.Panel headerPanel;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Label lblUserInfo;
     }
 }
